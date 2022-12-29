@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Book;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,10 +17,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome', [
+        "latestBooks" => Book::orderByDesc("id")->take(30)->get(),
+    ]);
 });
 
 Route::get('/book/{id}', [BookController::class, 'details'])->name('book.details');
+Route::get('/search', [BookController::class, 'search'])->name('book.search');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

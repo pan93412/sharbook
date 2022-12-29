@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Book;
+use App\Models\BookPictures;
 use App\Models\Contact;
 use App\Models\Pricing;
 use App\Models\User;
@@ -24,6 +25,7 @@ class DatabaseSeeder extends Seeder
             ->has(
                 Book::factory()->count(6)
                     ->has(Pricing::factory()->count(3))
+                    ->has(BookPictures::factory())
             )
             ->create();
 

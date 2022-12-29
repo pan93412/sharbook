@@ -12,11 +12,14 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('pricings', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId("book_id")->references("id")->on('books');
-            $table->string("type")->comment("價格項目的類型（比如電子書版本、實體書版本）");
-            $table->unsignedDecimal("price")->comment("這個類型書本的價格");
+        Schema::table("books", function (Blueprint $table) {
+            $table->string("name")->index()->change();
+            $table->string("author")->index()->change();
+            $table->string("publisher")->index()->change();
+        });
+
+        Schema::table("users", function (Blueprint $table) {
+            $table->string("name")->index()->change();
         });
     }
 
@@ -27,6 +30,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('pricings');
+        // FIXME: revert index
     }
 };

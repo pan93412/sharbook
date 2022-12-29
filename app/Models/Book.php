@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\BookStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,16 +17,26 @@ class Book extends Model
         "publisher",
         "published_at",
         "language",
-        "is_used",
+        "status",
     ];
 
-    public function users()
+    protected $casts = [
+        'status' => BookStatus::class,
+        'published_at' => 'datetime:Y-m-d',
+    ];
+
+    public function user()
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function pricings()
     {
-        $this->hasMany(Pricing::class);
+        return $this->hasMany(Pricing::class);
+    }
+
+    public function bookPictures()
+    {
+        return $this->hasMany(BookPictures::class);
     }
 }
